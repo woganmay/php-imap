@@ -506,6 +506,10 @@ class Mailbox {
 	 */
 	public function getMailHeader($mailId) {
 		$headersRaw = $this->imap('fetchheader', [$mailId, FT_UID]);
+		
+		// Edge Case 001: Duplicate From:
+		$headersRaw = str_replace("From: From:", "From:", $headersRaw);
+		
 		$head = imap_rfc822_parse_headers($headersRaw);
 
 		$header = new IncomingMailHeader();
