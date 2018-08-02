@@ -593,6 +593,9 @@ class Mailbox {
 	}
 
 	protected function initMailPart(IncomingMail $mail, $partStructure, $partNum, $markAsSeen = true) {
+		// Edge Case 002: Sometimes a null partStructure comes through
+		if ($partStructure == null) return;
+		
 		$options = FT_UID;
 		if(!$markAsSeen) {
 			$options |= FT_PEEK;
